@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  credutpay.services.api:
+    image: ${DOCKER_REGISTRY-}credutpayservicesapi
+    build:
+      context: .
+      dockerfile: src/CredutPay.Services.API/Dockerfile

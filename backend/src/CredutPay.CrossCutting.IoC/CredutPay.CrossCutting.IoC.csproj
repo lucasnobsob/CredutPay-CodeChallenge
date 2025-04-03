@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="8.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CredutPay.Application\CredutPay.Application.csproj" />
+    <ProjectReference Include="..\CredutPay.CrossCutting.Bus\CredutPay.CrossCutting.Bus.csproj" />
+    <ProjectReference Include="..\CredutPay.CrossCutting.Identity\CredutPay.CrossCutting.Identity.csproj" />
+    <ProjectReference Include="..\CredutPay.Domain.Core\CredutPay.Domain.Core.csproj" />
+    <ProjectReference Include="..\CredutPay.Infra.Data\CredutPay.Infra.Data.csproj" />
+  </ItemGroup>
+
+</Project>

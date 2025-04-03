@@ -1,0 +1,72 @@
+## Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Dd]ist/
+[Dd]ist/
+[Dd]ebug-vs/
+[Dd]ebug-x86/
+[Dd]ebug-x64/
+[Dd]ebug-any/
+[Dd]ebug-windows/
+[Dd]ebug-linux/
+[Dd]ebug-osx/
+[Dd]ebug-arm/
+bin/
+obj/
+
+## User-specific files
+.idea/
+.vscode/
+
+## Windows installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+## Windows Installer (Visual Studio)
+.vs2017/
+.vs2019/
+.vs2015/
+.vs/
+# User-specific files for Visual Studio for Mac
+.vscode/
+
+## Windows image file
+Thumbs.db
+
+## JetBrains Rider
+.idea/
+
+## ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+## .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## npm packages
+node_modules/
+
+## Windows Installer Files
+*.cab
+*.msi
+*.msm
+*.msp
+
+## SQL Server files
+*.mdf
+*.ldf
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Windows Installer
+*.cab
+*.msi
+*.msm
+*.msp
