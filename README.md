@@ -1,17 +1,40 @@
 # CredutPay-CodeChallenge
 
+## Stack Técnica
+- .NET 8.0
+- .NET WebApi
+- .NET Identity
+- Entity Framework 8.0
+- .NET Core Native DI
+- AutoMapper
+- FluentValidator
+- MediatR
+- Swagger UI
+- MSSQL
+- xUnit
+- Moq
+- Fluent Assertions
+- Polly
+- Refit
+
+## Design Patterns
+- Domain Driven Design
+- Domain Events
+- Domain Notification
+- CQRS
+- Event Sourcing
+- Unit Of Work
+- Repository & Generic Repository
+- Inversion of Control / Dependency injection
+- ORM
+- Mediator
+- Specification Pattern
+- Options Pattern
+
 Este projeto é composto por:
 
 - **Backend:** API desenvolvida em .NET 8
 - **Frontend:** Aplicação React + TypeScript + Tailwind CSS com Next.js
-
-## 📁 Estrutura do Projeto
-
-```
-/backend       -> API .NET 8
-/frontend      -> Frontend React + Next.js
-/docker        -> Arquivos de configuração do Docker (caso exista)
-```
 
 ---
 
@@ -32,7 +55,7 @@ Este projeto é composto por:
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
+   git clone https://github.com/lucasnobsob/CredutPay-CodeChallenge.git
    cd seu-repositorio
    ```
 
@@ -46,7 +69,7 @@ Este projeto é composto por:
    docker-compose up
    ```
 
-> A API estará disponível em `http://localhost:8080` ou `http://localhost:8081`
+> A API estará disponível em `http://localhost:8080`
 
 4. Em outro terminal, inicie o frontend manualmente:
    ```bash
@@ -63,7 +86,7 @@ Este projeto é composto por:
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
+   git clone https://github.com/lucasnobsob/CredutPay-CodeChallenge.git
    cd seu-repositorio
    ```
 
@@ -80,7 +103,7 @@ Este projeto é composto por:
    dotnet run
    ```
 
-> A API estará disponível em `http://localhost:8080` ou conforme especificado no `launchSettings.json`.
+> A API estará disponível em `http://localhost:44376` conforme especificado no `launchSettings.json`.
 
 ### 🎨 Rodando o Frontend (React + Next.js)
 
@@ -105,7 +128,7 @@ Este projeto é composto por:
 
 ## 🛠️ Variáveis de ambiente
 
-- Verifique se há um arquivo `.env` na raiz ou nas pastas `backend` e `frontend`
+- Existe um arquivo `.env` na raiz da pasta `frontend`
 - Edite conforme necessário, por exemplo:
 
 ```env
@@ -115,12 +138,6 @@ NEXT_PUBLIC_API_URL=http://localhost:8080
 
 ---
 
-## ❓ Dúvidas ou problemas?
-
-Abra uma **issue** neste repositório ou entre em contato pelo [seu_email@email.com].
-
----
-
 ## 📄 Licença
 
-Este projeto está licenciado sob a [MIT License](LICENSE).
+Este projeto está licenciado sob a [GNU License](LICENSE).
