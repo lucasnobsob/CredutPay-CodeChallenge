@@ -52,12 +52,6 @@ namespace CredutPay.Application.Services
             return _mapper.Map<WalletViewModel>(wallet);
         }
 
-        public async Task<WalletViewModel> GetByUserId(Guid Id)
-        {
-            var wallet = await _walletRepository.GetByUserId(Id);
-            return _mapper.Map<WalletViewModel>(wallet);
-        }
-
         public async Task Register(CreateWalletViewModel walletViewModel)
         {
             var registerCommand = _mapper.Map<RegisterNewWalletCommand>(walletViewModel);

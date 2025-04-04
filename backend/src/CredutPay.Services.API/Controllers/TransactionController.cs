@@ -1,6 +1,5 @@
 ﻿using CredutPay.Application.EventSourcedNormalizers;
 using CredutPay.Application.Interfaces;
-using CredutPay.Application.Services;
 using CredutPay.Application.ViewModels;
 using CredutPay.Domain.Core.Interfaces;
 using CredutPay.Domain.Core.Notifications;
@@ -16,12 +15,12 @@ namespace CredutPay.Services.API.Controllers
     public class TransactionController : ApiController
     {
         private readonly ITransactionAppService _transactionAppService;
-        private readonly ILogger<WalletController> _logger;
+        private readonly ILogger<TransactionController> _logger;
 
         public TransactionController(
             INotificationHandler<DomainNotification> notifications,
             ITransactionAppService transactionAppService,
-            ILogger<WalletController> logger,
+            ILogger<TransactionController> logger,
             IMediatorHandler mediator) : base(notifications, mediator)
         {
             _transactionAppService = transactionAppService;
@@ -59,7 +58,7 @@ namespace CredutPay.Services.API.Controllers
 
             await _transactionAppService.Register(transactionCreateViewModel);
 
-            return Response(transactionCreateViewModel);
+            return Created();
         }
 
         [HttpGet]

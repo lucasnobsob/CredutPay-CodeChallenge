@@ -73,7 +73,7 @@ namespace CredutPay.Services.API.Controllers
             createWalletViewModel.UserId = result;
             await _walletAppService.Register(createWalletViewModel);
 
-            return Response(createWalletViewModel);
+            return Created();
         }
 
         [HttpDelete]
