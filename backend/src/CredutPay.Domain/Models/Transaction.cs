@@ -28,7 +28,7 @@ namespace CredutPay.Domain.Models
         public Transaction() { }
         public decimal Amount { get; set; }
         public string Description { get; set; }
-        public DateTime Date { get; set; } = DateTime.UtcNow;
+        public DateTime Date { get; set; } = DateTime.Now;
 
         public TransactionType Type { get; set; }
 

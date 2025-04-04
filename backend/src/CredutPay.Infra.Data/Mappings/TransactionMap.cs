@@ -11,9 +11,7 @@ namespace CredutPay.Infra.Data.Mappings
             builder.HasKey(t => t.Id);
 
             builder.Property(t => t.Date)
-                   .IsRequired()
-                   .HasColumnType("datetime2")
-                   .HasDefaultValueSql("GETUTCDATE()");
+                   .IsRequired();
 
             builder.Property(t => t.Amount)
                    .HasColumnType("decimal(18,2)")
@@ -21,7 +19,7 @@ namespace CredutPay.Infra.Data.Mappings
 
             builder.Property(t => t.Description)
                    .HasColumnType("varchar(255)")
-                   .IsRequired(false);
+                   .IsRequired();
 
             builder.HasOne(t => t.SourceWallet)
                    .WithMany(t => t.SourceTransactions)
