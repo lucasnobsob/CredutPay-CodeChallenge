@@ -21,5 +21,10 @@ namespace CredutPay.Infra.Data.Repository
                 .OrderByDescending(w => w.Date)
                 .ToListAsync();
         }
+
+        public async Task<int> GetTotalCount(Guid WalletId)
+        {
+            return await DbSet.AsNoTracking().Where(x => x.SourceWalletId == WalletId).CountAsync();
+        }
     }
 }

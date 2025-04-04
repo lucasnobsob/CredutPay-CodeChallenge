@@ -1,32 +1,36 @@
 // pages/wallets.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { FaTrash } from "react-icons/fa";
+import { FaPowerOff, FaTrash, FaUserCircle } from "react-icons/fa";
+import Wallet from "../models/wallet";
 
 // Definindo a interface para o tipo Wallet
-interface Wallet {
-  id: string;
-  name: string;
-  balance: number;
-}
 
 export default function WalletsPage() {
   const [wallets, setWallets] = useState<Wallet[]>([]);
   const [newWalletName, setNewWalletName] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [token, setToken] = useState<string | null>(null);
+  const [token] = useState<string | null>(localStorage.getItem("token"));
+  const [email] = useState<string | null>(localStorage.getItem("userEmail"));
   const router = useRouter();
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
 
   // Função para buscar as carteiras
   const fetchWallets = async () => {
     try {
       setLoading(true);
-      const response = await fetch("https://localhost:44376/api/wallet");
+      const response = await fetch("https://localhost:44376/api/wallet/user", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (!response.ok) throw new Error("Erro na requisição");
       const data = await response.json();
       setWallets(data.data);
@@ -40,14 +44,16 @@ export default function WalletsPage() {
   // Carregar carteiras ao montar o componente
   useEffect(() => {
     fetchWallets();
-
-    if (typeof window !== "undefined") {
-      setToken(localStorage.getItem("token"));
-    }
   }, []);
 
   const handleViewTransactions = (walletId: string) => {
     router.push(`/transaction?walletId=${walletId}`);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userEmail");
+    router.push(`/login`);
   };
 
   // Criar nova carteira
@@ -80,9 +86,15 @@ export default function WalletsPage() {
     if (!confirm("Tem certeza que deseja excluir esta carteira?")) return;
 
     try {
-      const response = await fetch(`https://localhost:44376/api/wallet/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `https://localhost:44376/api/wallet?id=${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (!response.ok) throw new Error("Erro na requisição");
       fetchWallets();
     } catch {
@@ -91,8 +103,37 @@ export default function WalletsPage() {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Minhas Carteiras</h1>
+    <div
+      className="p-6 max-w-4xl mx-auto bg-gray-50 min-h-screen relative"
+      ref={dropdownRef}
+    >
+      {/* Barra superior com usuário logado */}
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold">Minhas Carteiras</h1>
+
+        {/* Usuário Logado */}
+        <button
+          onClick={() => setShowDropdown((prev) => !prev)}
+          className="flex items-center gap-2 text-gray-700 hover:text-black focus:outline-none"
+        >
+          <FaUserCircle size={24} />
+          <span className="font-semibold">{email}</span>
+        </button>
+        {showDropdown && (
+          <div
+            className="absolute right-0 w-40 bg-white border rounded shadow-lg z-20"
+            style={{ marginTop: "70px" }}
+          >
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-100 w-full text-left"
+            >
+              <FaPowerOff />
+              Sair
+            </button>
+          </div>
+        )}
+      </div>
 
       {/* Formulário de criação */}
       <form onSubmit={handleCreate} className="mb-6">

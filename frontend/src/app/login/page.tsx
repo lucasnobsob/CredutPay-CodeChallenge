@@ -40,6 +40,7 @@ const Login = () => {
 
       const data = await response.json();
       localStorage.setItem("token", data.data.accessToken);
+      localStorage.setItem("userEmail", email);
       console.log("Login successful", data);
 
       // Redireciona para a página de CRUD de funcionário após login bem-sucedido

@@ -29,33 +29,32 @@ namespace CredutPay.Services.API.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         [ProducesResponseType(typeof(IEnumerable<WalletViewModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAll()
         {
-            var wallets = await _walletAppService.GetAll();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Guid.TryParse(userId, out Guid result);
+            var wallets = await _walletAppService.GetAll(result);
             return Response(wallets);
         }
 
         [HttpGet]
-        [AllowAnonymous]
-        [Route("{id:guid}")]
-        [ProducesResponseType(typeof(WalletViewModel), StatusCodes.Status200OK)]
+        [Route("user")]
+        [ProducesResponseType(typeof(IEnumerable<WalletViewModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> GetAllByUserId()
         {
-            _logger.LogInformation("Guid recebido: {@guid}", id);
-
-            var wallet = await _walletAppService.GetById(id);
-
-            return Response(wallet);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Guid.TryParse(userId, out Guid result);
+            var wallets = await _walletAppService.GetAllByUserId(result);
+            return Response(wallets);
         }
 
         [HttpPost]
-        //[Authorize(Policy = "CanWriteWalletData", Roles = Roles.Admin)]
+        [Authorize(Policy = "CanWriteWalletData", Roles = Roles.Admin)]
         [ProducesResponseType(typeof(CreateWalletViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -92,7 +91,6 @@ namespace CredutPay.Services.API.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         [Route("history/{id:guid}")]
         [ProducesResponseType(typeof(IList<WalletHistoryData>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]

@@ -1,3 +1,5 @@
+using CredutPay.Application.Interfaces;
+using CredutPay.Application.ViewModels;
 using CredutPay.Domain.Core.Interfaces;
 using CredutPay.Domain.Core.Notifications;
 using MediatR;
@@ -32,6 +34,16 @@ namespace CredutPay.Services.Api.Controllers
         {
             if (IsValidOperation())
             {
+                if (result is IPaginatedResult paginatedResult)
+                {
+                    return Ok(new
+                    {
+                        success = true,
+                        data = paginatedResult.Items,
+                        totalCount = paginatedResult.TotalCount
+                    });
+                }
+
                 return Ok(new
                 {
                     success = true,

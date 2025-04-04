@@ -27,10 +27,17 @@ namespace CredutPay.Application.Services
             Bus = bus;
         }
 
-        public async Task<IEnumerable<WalletViewModel>> GetAll()
+        public async Task<IEnumerable<WalletViewModel>> GetAll(Guid userId)
         {
-            var wallet = await _walletRepository.GetAll();
-            return _mapper.Map<List<WalletViewModel>>(wallet);
+            var wallets = await _walletRepository.GetAll();
+            var filteredWallets = wallets.Where(x => x.UserId != userId.ToString()).ToList();
+            return _mapper.Map<List<WalletViewModel>>(filteredWallets);
+        }
+
+        public async Task<IEnumerable<WalletViewModel>> GetAllByUserId(Guid userId)
+        {
+            var wallets = await _walletRepository.GetAllByUserId(userId);
+            return _mapper.Map<List<WalletViewModel>>(wallets);
         }
 
         public async Task<IList<WalletHistoryData>> GetAllHistory(Guid id)

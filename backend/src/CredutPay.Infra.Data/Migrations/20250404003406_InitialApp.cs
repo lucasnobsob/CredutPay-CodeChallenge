@@ -69,6 +69,19 @@ namespace CredutPay.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SeedHistory",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SeedName = table.Column<string>(type: "varchar(255)", nullable: false),
+                    ExecutedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SeedHistory", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -300,6 +313,9 @@ namespace CredutPay.Infra.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "RefreshTokens");
+
+            migrationBuilder.DropTable(
+                name: "SeedHistory");
 
             migrationBuilder.DropTable(
                 name: "Transaction");

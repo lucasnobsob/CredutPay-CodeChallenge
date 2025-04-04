@@ -34,10 +34,14 @@ namespace CredutPay.Application.Services
             return _mapper.Map<List<TransactionViewModel>>(transactions);
         }
 
-        public async Task<IEnumerable<TransactionViewModel>> GetAll(int skip, int take, Guid walletId)
+        public async Task<PaginatedResult<TransactionViewModel>> GetAll(int skip, int take, Guid walletId)
         {
-            var transactions = await _transactionRepository.GetAll(new TransactionFilterPaginatedSpecification(skip, take, walletId));
-            return _mapper.Map<List<TransactionViewModel>>(transactions);
+            var spec = new TransactionFilterPaginatedSpecification(skip, take, walletId);
+            var transactions = await _transactionRepository.GetAll(spec);
+            var mappedTransactions = _mapper.Map<List<TransactionViewModel>>(transactions);
+            var totalCount = await _transactionRepository.GetTotalCount(walletId);
+
+            return new PaginatedResult<TransactionViewModel>(mappedTransactions, totalCount);
         }
 
         public async Task<IList<TransactionHistoryData>> GetAllHistory(Guid id)

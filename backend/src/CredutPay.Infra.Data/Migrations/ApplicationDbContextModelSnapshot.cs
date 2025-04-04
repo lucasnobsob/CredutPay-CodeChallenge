@@ -90,6 +90,24 @@ namespace CredutPay.Infra.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("CredutPay.Domain.Models.SeedHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ExecutedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SeedName")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SeedHistory");
+                });
+
             modelBuilder.Entity("CredutPay.Domain.Models.Transaction", b =>
                 {
                     b.Property<Guid>("Id")

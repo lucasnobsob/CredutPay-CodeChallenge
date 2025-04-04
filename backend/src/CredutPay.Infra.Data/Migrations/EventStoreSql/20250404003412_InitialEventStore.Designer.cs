@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CredutPay.Infra.Data.Migrations.EventStoreSql
 {
     [DbContext(typeof(EventStoreSqlContext))]
-    [Migration("20250402191331_InitialEventStore")]
+    [Migration("20250404003412_InitialEventStore")]
     partial class InitialEventStore
     {
         /// <inheritdoc />

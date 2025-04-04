@@ -44,7 +44,7 @@ builder.Services.AddControllers()
 
 var app = builder.Build();
 
-app.ApplyMigrations();
+app.ApplyMigrationsAsync();
 
 // ----- Error Handling -----
 app.UseCustomizedErrorHandling(_env);

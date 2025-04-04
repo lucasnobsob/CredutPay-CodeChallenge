@@ -14,7 +14,17 @@ namespace CredutPay.Infra.Data.Repository
 
         public async Task<Wallet?> GetByUserId(Guid Id)
         {
-            return await DbSet.AsNoTracking().Include(w => w.User).FirstOrDefaultAsync(w => w.UserId == Id.ToString());
+            return await DbSet.AsNoTracking()
+                .Include(w => w.User)
+                .FirstOrDefaultAsync(w => w.UserId == Id.ToString());
+        }
+
+        public async Task<IEnumerable<Wallet>> GetAllByUserId(Guid Id)
+        {
+            return await DbSet.AsNoTracking()
+                .Include(w => w.User)
+                .Where(w => w.UserId == Id.ToString())
+                .ToListAsync();
         }
     }
 }

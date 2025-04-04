@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AB-INBEV Code Challenge",
-  description: "AB-INBEV Code Challenge",
+  title: "CredutPay Code Challenge",
+  description: "CredutPay Code Challenge",
 };
 
 export default function RootLayout({

@@ -29,7 +29,6 @@ namespace CredutPay.Services.API.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         [Route("wallet/{id:guid}")]
         [ProducesResponseType(typeof(TransactionViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
@@ -64,7 +63,6 @@ namespace CredutPay.Services.API.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         [Route("history/{id:guid}")]
         [ProducesResponseType(typeof(IList<WalletHistoryData>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
@@ -76,7 +74,6 @@ namespace CredutPay.Services.API.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         [Route("wallet/pagination")]
         [ProducesResponseType(typeof(IEnumerable<TransactionViewModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]

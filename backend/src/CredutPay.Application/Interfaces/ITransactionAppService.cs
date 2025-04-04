@@ -7,7 +7,7 @@ namespace CredutPay.Application.Interfaces
     {
         Task Register(CreateTransactionViewModel transactionViewModel);
         Task<IEnumerable<TransactionViewModel>> GetAll();
-        Task<IEnumerable<TransactionViewModel>> GetAll(int skip, int take, Guid walletId);
+        Task<PaginatedResult<TransactionViewModel>> GetAll(int skip, int take, Guid walletId);
         Task<IEnumerable<TransactionViewModel>> GetByWalletId(Guid id);
         Task<IList<TransactionHistoryData>> GetAllHistory(Guid id);
     }

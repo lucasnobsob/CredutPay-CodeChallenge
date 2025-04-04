@@ -15,8 +15,9 @@ namespace CredutPay.Infra.Data.Context
         }
 
         public DbSet<Wallet> Wallets { get; set; }
-        public DbSet<Transaction> Employees { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<SeedHistory> SeedHistory { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
