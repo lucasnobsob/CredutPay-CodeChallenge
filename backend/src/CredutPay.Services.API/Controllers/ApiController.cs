@@ -34,28 +34,20 @@ namespace CredutPay.Services.Api.Controllers
         {
             if (IsValidOperation())
             {
-                if (result is IPaginatedResult paginatedResult)
+                if (result is IPaginatedSuccessResult paginatedResult)
                 {
-                    return Ok(new
-                    {
-                        success = true,
-                        data = paginatedResult.Items,
-                        totalCount = paginatedResult.TotalCount
-                    });
+                    return Ok(new PaginatedSuccessResult<object>(
+                        true, 
+                        paginatedResult.Data, 
+                        paginatedResult.TotalCount
+                    ));
                 }
 
-                return Ok(new
-                {
-                    success = true,
-                    data = result
-                });
+                return Ok(new SuccessResult<object>(true, result));
             }
 
-            return BadRequest(new
-            {
-                success = false,
-                errors = _notifications.GetNotifications().Select(n => n.Value)
-            });
+            return BadRequest(new ErrorResult<object>(
+                false, _notifications.GetNotifications().Select(n => n.Value)));
         }
 
         protected void NotifyModelStateErrors()
