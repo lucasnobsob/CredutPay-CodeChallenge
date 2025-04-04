@@ -1,4 +1,5 @@
 using CredutPay.Domain.Core.Events;
+using CredutPay.Infra.Data.DBSpecifications;
 using CredutPay.Infra.Data.Mappings;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,10 +15,7 @@ namespace CredutPay.Infra.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            foreach (var property in modelBuilder.Model.GetEntityTypes()
-                .SelectMany(e => e.GetProperties()
-                    .Where(p => p.ClrType == typeof(string))))
-                property.SetColumnType("varchar(255)");
+            PostgresDBSpecification.ConfigureProperties(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new StoredEventMap());
 

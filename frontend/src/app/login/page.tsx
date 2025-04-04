@@ -10,6 +10,7 @@ const Login = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter(); // Hook para navegação programática
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,16 +24,13 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        "https://localhost:44376/api/account/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        }
-      );
+      const response = await fetch(`${apiUrl}/api/account/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
 
       if (!response.ok) {
         throw new Error("Failed to login");
