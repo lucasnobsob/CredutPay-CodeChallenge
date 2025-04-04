@@ -20,12 +20,13 @@ export default function WalletsPage() {
   const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // Função para buscar as carteiras
   const fetchWallets = async () => {
     try {
       setLoading(true);
-      const response = await fetch("https://localhost:44376/api/wallet/user", {
+      const response = await fetch(`${apiUrl}/api/wallet/user`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -62,7 +63,7 @@ export default function WalletsPage() {
     if (!newWalletName.trim()) return;
 
     try {
-      const response = await fetch("https://localhost:44376/api/wallet", {
+      const response = await fetch(`${apiUrl}/api/wallet`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -86,15 +87,12 @@ export default function WalletsPage() {
     if (!confirm("Tem certeza que deseja excluir esta carteira?")) return;
 
     try {
-      const response = await fetch(
-        `https://localhost:44376/api/wallet?id=${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${apiUrl}/api/wallet?id=${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (!response.ok) throw new Error("Erro na requisição");
       fetchWallets();
     } catch {

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -30,21 +31,21 @@ namespace CredutPay.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "varchar(255)", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     UserName = table.Column<string>(type: "varchar(255)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "varchar(255)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "varchar(255)", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "varchar(255)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    EmailConfirmed = table.Column<bool>(type: "boolean", nullable: false),
                     PasswordHash = table.Column<string>(type: "varchar(255)", nullable: true),
                     SecurityStamp = table.Column<string>(type: "varchar(255)", nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "varchar(255)", nullable: true),
                     PhoneNumber = table.Column<string>(type: "varchar(255)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                    PhoneNumberConfirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "boolean", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "boolean", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,10 +58,10 @@ namespace CredutPay.Infra.Data.Migrations
                 {
                     Token = table.Column<string>(type: "varchar(255)", nullable: false),
                     JwtId = table.Column<string>(type: "varchar(255)", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Used = table.Column<bool>(type: "bit", nullable: false),
-                    Invalidated = table.Column<bool>(type: "bit", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ExpiryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Used = table.Column<bool>(type: "boolean", nullable: false),
+                    Invalidated = table.Column<bool>(type: "boolean", nullable: false),
                     UserId = table.Column<string>(type: "varchar(255)", nullable: false)
                 },
                 constraints: table =>
@@ -72,9 +73,9 @@ namespace CredutPay.Infra.Data.Migrations
                 name: "SeedHistory",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "gen_random_uuid()"),
                     SeedName = table.Column<string>(type: "varchar(255)", nullable: false),
-                    ExecutedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ExecutedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -85,8 +86,8 @@ namespace CredutPay.Infra.Data.Migrations
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     RoleId = table.Column<string>(type: "varchar(255)", nullable: false),
                     ClaimType = table.Column<string>(type: "varchar(255)", nullable: true),
                     ClaimValue = table.Column<string>(type: "varchar(255)", nullable: true)
@@ -106,8 +107,8 @@ namespace CredutPay.Infra.Data.Migrations
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<string>(type: "varchar(255)", nullable: false),
                     ClaimType = table.Column<string>(type: "varchar(255)", nullable: true),
                     ClaimValue = table.Column<string>(type: "varchar(255)", nullable: true)
@@ -191,11 +192,11 @@ namespace CredutPay.Infra.Data.Migrations
                 name: "Wallet",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "gen_random_uuid()"),
                     Name = table.Column<string>(type: "varchar(50)", nullable: false),
-                    Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Balance = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     UserId = table.Column<string>(type: "varchar(255)", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -212,14 +213,14 @@ namespace CredutPay.Infra.Data.Migrations
                 name: "Transaction",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Description = table.Column<string>(type: "varchar(255)", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    SourceWalletId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DestinationWalletId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "gen_random_uuid()"),
+                    Amount = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
+                    Description = table.Column<string>(type: "varchar(255)", nullable: false),
+                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Type = table.Column<int>(type: "integer", nullable: false),
+                    SourceWalletId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DestinationWalletId = table.Column<Guid>(type: "uuid", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -247,8 +248,7 @@ namespace CredutPay.Infra.Data.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -274,8 +274,7 @@ namespace CredutPay.Infra.Data.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_DestinationWalletId",

@@ -3,16 +3,16 @@ using System;
 using CredutPay.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace CredutPay.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250404003406_InitialApp")]
+    [Migration("20250404194632_InitialApp")]
     partial class InitialApp
     {
         /// <inheritdoc />
@@ -21,9 +21,9 @@ namespace CredutPay.Infra.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.11")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("CredutPay.Domain.Models.ApplicationUser", b =>
                 {
@@ -31,7 +31,7 @@ namespace CredutPay.Infra.Data.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -42,16 +42,16 @@ namespace CredutPay.Infra.Data.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -68,13 +68,13 @@ namespace CredutPay.Infra.Data.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("varchar(255)");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
@@ -87,8 +87,7 @@ namespace CredutPay.Infra.Data.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -97,10 +96,11 @@ namespace CredutPay.Infra.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("gen_random_uuid()");
 
                     b.Property<DateTime>("ExecutedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("SeedName")
                         .IsRequired()
@@ -115,30 +115,30 @@ namespace CredutPay.Infra.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("gen_random_uuid()");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("Date")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETUTCDATE()");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("DestinationWalletId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<Guid>("SourceWalletId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Type")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -153,13 +153,14 @@ namespace CredutPay.Infra.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("gen_random_uuid()");
 
                     b.Property<decimal>("Balance")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -182,20 +183,20 @@ namespace CredutPay.Infra.Data.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("ExpiryDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("Invalidated")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("JwtId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<bool>("Used")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -227,8 +228,7 @@ namespace CredutPay.Infra.Data.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
                 });
@@ -237,9 +237,9 @@ namespace CredutPay.Infra.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("varchar(255)");
@@ -262,9 +262,9 @@ namespace CredutPay.Infra.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("varchar(255)");

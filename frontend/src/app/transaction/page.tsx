@@ -27,6 +27,7 @@ export default function TransactionPage() {
   const walletId = searchParams.get("walletId");
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [total, setTotal] = useState(0);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [newTransaction, setNewTransaction] = useState({
     amount: 0,
     description: "",
@@ -43,7 +44,7 @@ export default function TransactionPage() {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://localhost:44376/api/transaction/wallet/pagination?skip=${pagination.skip}&take=${pagination.take}&walletId=${walletId}`,
+        `${apiUrl}/api/transaction/wallet/pagination?skip=${pagination.skip}&take=${pagination.take}&walletId=${walletId}`,
         {
           method: "GET",
           headers: {
@@ -67,7 +68,7 @@ export default function TransactionPage() {
 
   useEffect(() => {
     if (showCreateModal) {
-      fetch("https://localhost:44376/api/wallet", {
+      fetch(`${apiUrl}/api/wallet`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -117,7 +118,7 @@ export default function TransactionPage() {
   const handleCreateTransaction = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("https://localhost:44376/api/transaction", {
+      const response = await fetch(`${apiUrl}/api/transaction`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

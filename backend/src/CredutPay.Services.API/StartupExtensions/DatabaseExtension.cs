@@ -8,7 +8,8 @@ namespace CredutPay.Services.Api.StartupExtensions
         public static IServiceCollection AddCustomizedDatabase(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
         {
             services.AddDbContext<ApplicationDbContext>(options => {
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                //options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
                 if (!env.IsProduction())
                 {
@@ -18,7 +19,8 @@ namespace CredutPay.Services.Api.StartupExtensions
             });
 
             services.AddDbContext<EventStoreSqlContext>(options => {
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                //options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
                 if (!env.IsProduction())
                 {

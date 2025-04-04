@@ -15,12 +15,12 @@ namespace CredutPay.Infra.Data.Migrations.EventStoreSql
                 name: "StoredEvent",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "gen_random_uuid()"),
                     Data = table.Column<string>(type: "varchar(255)", nullable: false),
                     User = table.Column<string>(type: "varchar(255)", nullable: false),
                     Action = table.Column<string>(type: "varchar(100)", nullable: false),
-                    AggregateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    AggregateId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
