@@ -10,22 +10,22 @@ services:
       - "8081:8081"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=db;Database=CredutPay;User Id=sa;Password=lUc@$951753;TrustServerCertificate=True;
+      - ConnectionStrings__DefaultConnection=Host=db;Database=CredutPay;Username=postgres;Password=lUc@$951753;
     depends_on:
       - db
     networks:
       - app-network
 
   db:
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    image: postgres:16
     environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=lUc@$951753
-      - MSSQL_PID=Express
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=lUc@$951753
+      - POSTGRES_DB=CredutPay
     ports:
-      - "1433:1433"
+      - "5432:5432"
     volumes:
-      - sqlserver-data:/var/opt/mssql
+      - postgres-data:/var/lib/postgresql/data
     networks:
       - app-network
 
@@ -34,4 +34,4 @@ networks:
     driver: bridge
 
 volumes:
-  sqlserver-data:
+  postgres-data:

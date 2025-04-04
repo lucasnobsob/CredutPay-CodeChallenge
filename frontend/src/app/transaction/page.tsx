@@ -43,7 +43,7 @@ export default function TransactionPage() {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://localhost:44376/api/transaction/wallet/pagination?skip=${pagination.skip}&take=${pagination.take}&walletId=${walletId}`,
+        `http://localhost:8080/api/transaction/wallet/pagination?skip=${pagination.skip}&take=${pagination.take}&walletId=${walletId}`,
         {
           method: "GET",
           headers: {
@@ -67,7 +67,7 @@ export default function TransactionPage() {
 
   useEffect(() => {
     if (showCreateModal) {
-      fetch("https://localhost:44376/api/wallet", {
+      fetch("http://localhost:8080/api/wallet", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -117,7 +117,7 @@ export default function TransactionPage() {
   const handleCreateTransaction = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("https://localhost:44376/api/transaction", {
+      const response = await fetch("http://localhost:8080/api/transaction", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

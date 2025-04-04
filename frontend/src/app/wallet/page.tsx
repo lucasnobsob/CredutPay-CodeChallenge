@@ -25,7 +25,7 @@ export default function WalletsPage() {
   const fetchWallets = async () => {
     try {
       setLoading(true);
-      const response = await fetch("https://localhost:44376/api/wallet/user", {
+      const response = await fetch("http://localhost:8080/api/wallet/user", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -62,7 +62,7 @@ export default function WalletsPage() {
     if (!newWalletName.trim()) return;
 
     try {
-      const response = await fetch("https://localhost:44376/api/wallet", {
+      const response = await fetch("http://localhost:8080/api/wallet", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -87,7 +87,7 @@ export default function WalletsPage() {
 
     try {
       const response = await fetch(
-        `https://localhost:44376/api/wallet?id=${id}`,
+        `http://localhost:8080/api/wallet?id=${id}`,
         {
           method: "DELETE",
           headers: {
