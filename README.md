@@ -10,7 +10,7 @@
 - FluentValidator
 - MediatR
 - Swagger UI
-- MSSQL
+- PostgresSQL
 - xUnit
 - Moq
 - Fluent Assertions
