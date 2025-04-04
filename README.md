@@ -43,8 +43,7 @@ Este projeto é composto por:
 
 3. Construa e suba os containers:
    ```bash
-   docker build -t minha-api .
-   docker run -d -p 8080:8080 -p 8081:8081 --name minha-api minha-api
+   docker-compose up
    ```
 
 > A API estará disponível em `http://localhost:8080` ou `http://localhost:8081`
