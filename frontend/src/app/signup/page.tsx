@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const Signup = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -21,6 +22,7 @@ const Signup = () => {
     }
 
     const payload = {
+      userName: name,
       email,
       password,
       confirmPassword,
@@ -64,6 +66,23 @@ const Signup = () => {
           {error && (
             <div className="text-red-500 text-sm text-center">{error}</div>
           )}
+
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
+              User Name
+            </label>
+            <input
+              id="name"
+              type="name"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </div>
 
           <div>
             <label
