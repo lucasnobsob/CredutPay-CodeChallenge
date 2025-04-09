@@ -204,10 +204,14 @@ export default function TransactionPage() {
                   className="space-y-4 mt-4"
                 >
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label
+                      htmlFor="amount"
+                      className="block text-sm font-medium text-gray-700"
+                    >
                       Valor
                     </label>
                     <input
+                      id="amount"
                       type="number"
                       value={newTransaction.amount}
                       onChange={(e) =>
@@ -353,6 +357,7 @@ export default function TransactionPage() {
         {transactions.length > 0 && (
           <div className="flex justify-between items-center mt-6">
             <button
+              aria-label="Página anterior"
               onClick={() => handlePageChange("prev")}
               disabled={pagination.skip === 0}
               className="bg-indigo-600 text-white px-4 py-2 rounded-lg disabled:bg-gray-400 hover:bg-indigo-700 transition-colors duration-200"
@@ -364,6 +369,7 @@ export default function TransactionPage() {
               {Math.ceil(total / pagination.take)}
             </span>
             <button
+              aria-label="Próxima página"
               onClick={() => handlePageChange("next")}
               disabled={pagination.skip + pagination.take >= total}
               className="bg-indigo-600 text-white px-4 py-2 rounded-lg disabled:bg-gray-400 hover:bg-indigo-700 transition-colors duration-200"
